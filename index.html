@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Basic English Grammar — Mid Semester Examination</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root{
+  --ink:#181c25;
+  --ink-soft:#3a4051;
+  --parchment:#faf6ec;
+  --parchment-dim:#f1ead9;
+  --card:#fffdf7;
+  --line:#ded3b6;
+  --sage:#4f7a5c;
+  --sage-dim:#e5efe4;
+  --amber:#d99a2b;
+  --amber-dim:#fbf0da;
+  --crimson:#b23a2f;
+  --crimson-dim:#fbe4e1;
+  --ring:#8a6d3b;
+  --shadow: 0 10px 30px rgba(24,28,37,0.10), 0 2px 8px rgba(24,28,37,0.06);
+  --radius: 14px;
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --mono: 'JetBrains Mono', 'Courier New', monospace;
+}
+
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--sans);
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 12% 8%, rgba(79,122,92,0.10), transparent 42%),
+    radial-gradient(circle at 88% 92%, rgba(217,154,43,0.12), transparent 45%),
+    var(--parchment);
+  min-height:100vh;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.001s !important; animation-iteration-count:1 !important; transition-duration:0.001s !important;}
+}
+
+/* subtle animated grain-paper texture dots drifting */
+.bg-drift{position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0.5;}
+.bg-drift span{
+  position:absolute; width:6px; height:6px; border-radius:50%;
+  background:var(--ring); opacity:0.06;
+  animation: drift 18s linear infinite;
+}
+@keyframes drift{
+  0%{transform:translateY(0) translateX(0);}
+  50%{transform:translateY(-30px) translateX(20px);}
+  100%{transform:translateY(0) translateX(0);}
+}
+
+.wrap{position:relative; z-index:1; max-width:900px; margin:0 auto; padding:28px 20px 90px;}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+h1,h2,h3{font-family:var(--serif); font-weight:600; letter-spacing:-0.01em;}
+.eyebrow{
+  font-family:var(--mono); text-transform:uppercase; letter-spacing:0.14em;
+  font-size:11px; color:var(--ink-soft); opacity:0.75;
+}
+
+/* ============================================================
+   SEAL / LOGO MARK (signature element)
+   ============================================================ */
+.seal{
+  width:64px; height:64px; border-radius:50%;
+  border:2px solid var(--ink);
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--serif); font-weight:700; font-size:22px;
+  background:var(--card);
+  position:relative;
+  flex-shrink:0;
+}
+.seal::before{
+  content:''; position:absolute; inset:5px; border-radius:50%;
+  border:1px dashed var(--ring); opacity:0.6;
+}
+.seal.spin-in{animation: sealDrop 0.7s cubic-bezier(.2,1.4,.4,1) both;}
+@keyframes sealDrop{
+  0%{transform:translateY(-40px) rotate(-25deg) scale(0.6); opacity:0;}
+  70%{transform:translateY(4px) rotate(4deg) scale(1.05); opacity:1;}
+  100%{transform:translateY(0) rotate(0deg) scale(1);}
+}
+
+/* ============================================================
+   CARD
+   ============================================================ */
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:28px 26px;
+}
+.card + .card{margin-top:18px;}
+
+/* ============================================================
+   SCREEN TRANSITIONS
+   ============================================================ */
+.screen{display:none;}
+.screen.active{display:block; animation:riseIn 0.5s ease both;}
+@keyframes riseIn{
+  from{opacity:0; transform:translateY(14px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+/* ============================================================
+   COVER / START SCREEN
+   ============================================================ */
+.cover-head{display:flex; align-items:center; gap:16px; margin-bottom:22px;}
+.cover-title h1{font-size:24px; line-height:1.25;}
+.cover-title p{font-family:var(--mono); font-size:12px; color:var(--ink-soft); margin-top:4px;}
+
+.meta-grid{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:10px 24px; margin:18px 0 6px; padding:16px 0;
+  border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+}
+.meta-grid div{font-size:13px;}
+.meta-grid b{display:block; font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:0.08em; color:var(--ring); margin-bottom:2px;}
+
+.rules{margin:20px 0; padding-left:0; list-style:none; counter-reset:rulenum;}
+.rules li{
+  counter-increment:rulenum;
+  position:relative; padding:7px 0 7px 34px; font-size:14px; color:var(--ink-soft);
+  border-bottom:1px dotted var(--line);
+}
+.rules li::before{
+  content:counter(rulenum);
+  position:absolute; left:0; top:6px;
+  width:22px; height:22px; border-radius:50%;
+  background:var(--sage-dim); color:var(--sage);
+  font-family:var(--mono); font-size:11px; font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+}
+
+.field{margin-bottom:16px;}
+.field label{
+  display:block; font-family:var(--mono); font-size:11px; text-transform:uppercase;
+  letter-spacing:0.08em; color:var(--ink-soft); margin-bottom:6px;
+}
+.field input[type=text]{
+  width:100%; padding:13px 14px; border:1.5px solid var(--line); border-radius:10px;
+  font-family:var(--sans); font-size:15px; background:var(--parchment); color:var(--ink);
+  transition:border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+.field input[type=text]:focus{
+  outline:none; border-color:var(--sage); background:#fff;
+  box-shadow:0 0 0 4px var(--sage-dim);
+}
+
+.btn{
+  font-family:var(--sans); font-weight:700; font-size:15px;
+  border:none; border-radius:10px; padding:14px 26px; cursor:pointer;
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  transition:transform 0.15s ease, box-shadow 0.15s ease, background 0.15s;
+}
+.btn:active{transform:translateY(1px) scale(0.99);}
+.btn-primary{background:var(--ink); color:#fff;}
+.btn-primary:hover{box-shadow:0 8px 18px rgba(24,28,37,0.25); transform:translateY(-1px);}
+.btn-primary:disabled{background:#c7c2b3; cursor:not-allowed; box-shadow:none; transform:none;}
+.btn-ghost{background:transparent; color:var(--ink-soft); border:1.5px solid var(--line);}
+.btn-ghost:hover{border-color:var(--ink-soft); color:var(--ink);}
+.btn-danger{background:var(--crimson); color:#fff;}
+.btn-danger:hover{box-shadow:0 8px 18px rgba(178,58,47,0.3);}
+.btn-yes{background:var(--sage); color:#fff;}
+.btn-yes:hover{box-shadow:0 8px 18px rgba(79,122,92,0.3);}
+.btn-full{width:100%;}
+
+/* ============================================================
+   STICKY EXAM HEADER
+   ============================================================ */
+.exam-bar{
+  position:sticky; top:0; z-index:40;
+  background:rgba(250,246,236,0.92); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+  padding:12px 20px;
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  flex-wrap:wrap;
+}
+.exam-bar-id{font-family:var(--mono); font-size:12px; color:var(--ink-soft);}
+.exam-bar-id b{color:var(--ink);}
+.timer{
+  font-family:var(--mono); font-weight:700; font-size:20px;
+  padding:8px 16px; border-radius:10px; background:var(--ink); color:#fff;
+  letter-spacing:0.03em;
+  min-width:104px; text-align:center;
+}
+.timer.warn{background:var(--amber); color:var(--ink); animation:pulseWarn 1s infinite;}
+.timer.danger{background:var(--crimson); color:#fff; animation:pulseWarn 0.6s infinite;}
+@keyframes pulseWarn{0%,100%{transform:scale(1);} 50%{transform:scale(1.05);}}
+
+.progress-outer{
+  flex:1 1 200px; height:8px; border-radius:6px; background:var(--parchment-dim);
+  overflow:hidden; border:1px solid var(--line); min-width:120px;
+}
+.progress-inner{
+  height:100%; width:0%; border-radius:6px;
+  background:linear-gradient(90deg, var(--sage), #6fa07d);
+  transition:width 0.4s cubic-bezier(.4,1.4,.4,1);
+}
+.progress-label{font-family:var(--mono); font-size:11px; color:var(--ink-soft); white-space:nowrap;}
+
+/* ============================================================
+   SECTIONS & QUESTIONS
+   ============================================================ */
+.section-head{
+  display:flex; align-items:baseline; gap:10px; margin:34px 0 14px;
+}
+.section-head .tag{
+  font-family:var(--mono); font-size:11px; background:var(--sage-dim); color:var(--sage);
+  padding:4px 10px; border-radius:20px; font-weight:700; letter-spacing:0.04em;
+}
+.section-head h2{font-size:19px;}
+.section-instruction{font-size:13.5px; color:var(--ink-soft); margin-bottom:16px; font-style:italic;}
+
+.q-card{
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:18px 20px; margin-bottom:12px;
+  position:relative;
+  transition:border-color 0.25s, box-shadow 0.25s;
+}
+.q-card.answered{border-color:var(--sage); box-shadow:0 0 0 3px var(--sage-dim);}
+.q-card.flagged{border-color:var(--crimson); box-shadow:0 0 0 3px var(--crimson-dim);}
+.q-head{display:flex; align-items:flex-start; gap:12px; margin-bottom:10px;}
+.q-num{
+  font-family:var(--mono); font-weight:700; font-size:13px;
+  width:28px; height:28px; border-radius:50%; background:var(--ink); color:#fff;
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  transition:background 0.3s, transform 0.3s;
+}
+.q-card.answered .q-num{background:var(--sage);}
+.q-card.answered .q-num::after{content:'✓';}
+.q-card.answered .q-num{font-size:0;}
+.q-card.answered .q-num::after{font-size:13px;}
+.q-prompt{font-size:15px; line-height:1.55;}
+.q-prompt em{color:var(--ring); font-style:italic;}
+.q-pts{margin-left:auto; font-family:var(--mono); font-size:11px; color:var(--ink-soft); white-space:nowrap; padding-top:4px;}
+
+.q-card input[type=text], .q-card textarea{
+  width:100%; margin-top:4px; padding:11px 13px; border:1.5px solid var(--line); border-radius:8px;
+  font-family:var(--sans); font-size:14.5px; background:var(--parchment); color:var(--ink); resize:vertical;
+  transition:border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+.q-card input[type=text]:focus, .q-card textarea:focus{
+  outline:none; border-color:var(--sage); background:#fff; box-shadow:0 0 0 4px var(--sage-dim);
+}
+.q-card textarea{min-height:64px;}
+
+/* ============================================================
+   SUBMIT DOCK
+   ============================================================ */
+.submit-dock{
+  margin-top:36px; text-align:center; padding:26px; border-top:2px dashed var(--line);
+}
+.submit-dock p{font-size:13px; color:var(--ink-soft); margin-top:10px;}
+
+/* ============================================================
+   MODALS
+   ============================================================ */
+.modal-overlay{
+  position:fixed; inset:0; background:rgba(24,28,37,0.55); backdrop-filter:blur(3px);
+  z-index:100; display:flex; align-items:center; justify-content:center; padding:20px;
+  opacity:0; pointer-events:none; transition:opacity 0.25s;
+}
+.modal-overlay.show{opacity:1; pointer-events:auto;}
+.modal{
+  background:var(--card); border-radius:16px; max-width:480px; width:100%;
+  padding:30px 28px; box-shadow:0 30px 60px rgba(0,0,0,0.35);
+  transform:translateY(20px) scale(0.97); transition:transform 0.3s cubic-bezier(.2,1.2,.4,1);
+}
+.modal-overlay.show .modal{transform:translateY(0) scale(1);}
+.modal h3{font-size:19px; margin-bottom:10px;}
+.modal p{font-size:14px; color:var(--ink-soft); margin-bottom:8px; line-height:1.6;}
+.modal .modal-actions{display:flex; gap:10px; margin-top:22px;}
+.modal .modal-actions .btn{flex:1;}
+.modal .warn-note{
+  background:var(--amber-dim); border:1px solid var(--amber); border-radius:10px;
+  padding:12px 14px; font-size:13px; color:#7a5514; margin:14px 0; font-weight:600;
+}
+.missing-list{
+  display:flex; flex-wrap:wrap; gap:6px; margin:14px 0;
+}
+.missing-list span{
+  font-family:var(--mono); font-size:12px; background:var(--crimson-dim); color:var(--crimson);
+  padding:4px 10px; border-radius:20px; font-weight:700;
+}
+
+/* ============================================================
+   ANTI-CHEAT FIRE OVERLAY
+   ============================================================ */
+.cheat-overlay{
+  position:fixed; inset:0; z-index:9999; background:rgba(30,4,2,0.92);
+  display:flex; align-items:center; justify-content:center; flex-direction:column;
+  opacity:0; pointer-events:none; transition:opacity 0.2s;
+  text-align:center; padding:24px;
+}
+.cheat-overlay.show{opacity:1; pointer-events:auto;}
+.flame-row{display:flex; gap:8px; margin-bottom:18px;}
+.flame{
+  font-size:52px; display:inline-block; filter:drop-shadow(0 0 14px rgba(255,110,0,0.8));
+  animation:flicker 0.9s infinite ease-in-out;
+}
+.flame:nth-child(2){animation-delay:0.15s; font-size:66px;}
+.flame:nth-child(3){animation-delay:0.3s;}
+@keyframes flicker{
+  0%,100%{transform:translateY(0) scale(1) rotate(-3deg);}
+  30%{transform:translateY(-6px) scale(1.08) rotate(2deg);}
+  60%{transform:translateY(2px) scale(0.94) rotate(-2deg);}
+}
+.cheat-overlay h2{
+  font-family:var(--serif); color:#ffece6; font-size:26px; margin-bottom:10px;
+  animation:shake 0.35s infinite;
+}
+@keyframes shake{
+  0%,100%{transform:translateX(0);} 25%{transform:translateX(-3px);} 75%{transform:translateX(3px);}
+}
+.cheat-overlay p{color:#ffcabf; font-size:14.5px; max-width:440px; margin:0 auto 18px;}
+.cheat-count{
+  font-family:var(--mono); font-size:13px; color:#ffcabf; background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.2); padding:8px 16px; border-radius:20px; margin-bottom:20px;
+}
+
+/* ============================================================
+   RESULTS SCREEN
+   ============================================================ */
+.score-hero{
+  text-align:center; padding:34px 20px; border-radius:16px;
+  background:linear-gradient(135deg, var(--ink), #2b3245); color:#fff; margin-bottom:24px;
+  position:relative; overflow:hidden;
+}
+.score-hero .ring-wrap{width:150px; height:150px; margin:0 auto 14px; position:relative;}
+.score-hero svg{transform:rotate(-90deg);}
+.score-hero .ring-bg{fill:none; stroke:rgba(255,255,255,0.15); stroke-width:10;}
+.score-hero .ring-fg{fill:none; stroke:#6fdc9e; stroke-width:10; stroke-linecap:round; stroke-dasharray:439.8; stroke-dashoffset:439.8; transition:stroke-dashoffset 1.4s cubic-bezier(.2,1,.3,1);}
+.score-hero .ring-text{
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column;
+}
+.score-hero .ring-text b{font-family:var(--serif); font-size:34px;}
+.score-hero .ring-text span{font-family:var(--mono); font-size:11px; opacity:0.7;}
+.score-hero h3{font-family:var(--serif); font-size:20px; margin-top:6px;}
+.score-hero p{font-family:var(--mono); font-size:12px; opacity:0.75; margin-top:4px;}
+
+.result-q{
+  border:1px solid var(--line); border-radius:12px; padding:16px 18px; margin-bottom:10px; background:var(--card);
+}
+.result-q .rq-top{display:flex; align-items:center; gap:10px; margin-bottom:8px;}
+.rq-badge{
+  font-family:var(--mono); font-size:11px; font-weight:700; padding:4px 10px; border-radius:20px;
+}
+.rq-badge.full{background:var(--sage-dim); color:var(--sage);}
+.rq-badge.partial{background:var(--amber-dim); color:#8a5f10;}
+.rq-badge.zero{background:var(--crimson-dim); color:var(--crimson);}
+.rq-label{font-family:var(--mono); font-size:11px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:2px;}
+.rq-text{font-size:14px; color:var(--ink); background:var(--parchment); padding:9px 12px; border-radius:8px; margin-bottom:8px; border:1px solid var(--line);}
+.rq-text.empty{color:#a39a83; font-style:italic;}
+.rq-correct{font-size:13.5px; color:var(--sage); background:var(--sage-dim); padding:9px 12px; border-radius:8px;}
+
+.gs-status{
+  font-family:var(--mono); font-size:12px; text-align:center; padding:10px; border-radius:10px; margin-bottom:20px;
+}
+.gs-status.ok{background:var(--sage-dim); color:var(--sage);}
+.gs-status.pending{background:var(--amber-dim); color:#8a5f10;}
+.gs-status.fail{background:var(--crimson-dim); color:var(--crimson);}
+
+footer.foot{text-align:center; margin-top:40px; font-family:var(--mono); font-size:11px; color:var(--ink-soft); opacity:0.6;}
+</style>
+</head>
+<body>
+
+<div class="bg-drift" id="bgDrift"></div>
+
+<div class="wrap">
+
+  <!-- =========================================================
+       SCREEN 1 — COVER / START
+  ========================================================== -->
+  <section id="screen-cover" class="screen active">
+    <div class="card">
+      <div class="cover-head">
+        <div class="seal spin-in">Aa</div>
+        <div class="cover-title">
+          <h1>Mid Semester Examination</h1>
+          <p>SUPPLEMENTARY SEMESTER 2025–2026 &nbsp;·&nbsp; BASIC ENGLISH GRAMMAR</p>
+        </div>
+      </div>
+
+      <div class="meta-grid">
+        <div><b>Lecturer</b>Agnechia Friska Rivalny, M.Hum</div>
+        <div><b>Credit</b>3 credits</div>
+        <div><b>Study Program</b>English Literature</div>
+        <div><b>Day &amp; Date</b>Wednesday, July 1, 2026</div>
+        <div><b>Room</b>M.111</div>
+        <div><b>Time Allowed</b>2 hours</div>
+        <div><b>Questions</b>43 items, 5 sections</div>
+        <div><b>Format</b>Closed book</div>
+      </div>
+
+      <ol class="rules">
+        <li>This exam consists of 43 questions across 5 sections.</li>
+        <li>Time allowed for this examination is <strong>2 hours</strong>. The exam auto-submits when time runs out.</li>
+        <li>This tab must remain active and in focus at all times — switching tabs or minimizing will trigger a warning.</li>
+        <li>Answer every question. You cannot submit until all 43 items have a response.</li>
+        <li>Write clearly — flexible grading tolerates different wording that carries the same meaning.</li>
+        <li>Once you press <strong>Yes</strong> on the final confirmation, your exam is locked and scored automatically.</li>
+      </ol>
+
+      <div class="field">
+        <label for="studentName">Full Name</label>
+        <input type="text" id="studentName" placeholder="e.g. Andini Puspitasari" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="studentId">Student ID Number</label>
+        <input type="text" id="studentId" placeholder="e.g. 2024-11-045" autocomplete="off">
+      </div>
+      <div class="field" id="startErrorField" style="display:none;">
+        <div class="modal warn-note" style="padding:10px 14px;">Please enter both your name and student ID before starting.</div>
+      </div>
+
+      <button class="btn btn-primary btn-full" id="btnStart">Start Examination →</button>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SCREEN 2 — EXAM
+  ========================================================== -->
+  <section id="screen-exam" class="screen">
+    <div class="exam-bar">
+      <div class="exam-bar-id">Candidate: <b id="barName">—</b> &nbsp;·&nbsp; ID: <b id="barId">—</b></div>
+      <div class="progress-outer"><div class="progress-inner" id="progressBar"></div></div>
+      <div class="progress-label" id="progressLabel">0 / 43</div>
+      <div class="timer" id="timerDisplay">02:00:00</div>
+    </div>
+
+    <div id="questionsRoot"></div>
+
+    <div class="submit-dock">
+      <button class="btn btn-primary" id="btnSubmit" style="min-width:220px;">Submit</button>
+      <p>Once submitted, your exam is scored automatically and cannot be reopened.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SCREEN 3 — RESULTS
+  ========================================================== -->
+  <section id="screen-results" class="screen">
+    <div class="score-hero">
+      <div class="ring-wrap">
+        <svg width="150" height="150" viewBox="0 0 150 150">
+          <circle class="ring-bg" cx="75" cy="75" r="70"></circle>
+          <circle class="ring-fg" id="ringFg" cx="75" cy="75" r="70"></circle>
+        </svg>
+        <div class="ring-text"><b id="scorePct">0%</b><span>SCORE</span></div>
+      </div>
+      <h3 id="scoreRaw">0 / 0 points</h3>
+      <p id="scoreCandidate">—</p>
+    </div>
+
+    <div class="gs-status pending" id="gsStatus">Sending your results to the answer sheet…</div>
+
+    <div class="section-head"><span class="tag">REVIEW</span><h2>Your Answers &amp; Correction</h2></div>
+    <div id="resultsRoot"></div>
+
+    <footer class="foot">Basic English Grammar · Mid Semester Examination · Auto-graded submission</footer>
+  </section>
+
+</div>
+
+<!-- =========================================================
+     MODAL: MISSING ANSWERS REMINDER
+========================================================== -->
+<div class="modal-overlay" id="modalMissing">
+  <div class="modal">
+    <h3>A few questions are still empty</h3>
+    <p>You need to answer every question before you can submit. The following items are missing a response:</p>
+    <div class="missing-list" id="missingList"></div>
+    <div class="modal-actions">
+      <button class="btn btn-primary btn-full" id="btnMissingOk">Go back and finish them</button>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================
+     MODAL: FINAL CONFIRMATION (YES / NO)
+========================================================== -->
+<div class="modal-overlay" id="modalConfirm">
+  <div class="modal">
+    <h3>Submit your exam?</h3>
+    <p>All 43 questions have been answered. This is your last chance to review before scoring.</p>
+    <div class="warn-note">Please double check your answer before you click yes.</div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost btn-full" id="btnConfirmNo">No, let me review</button>
+      <button class="btn btn-yes btn-full" id="btnConfirmYes">Yes, submit</button>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================
+     ANTI-CHEAT FIRE WARNING OVERLAY
+========================================================== -->
+<div class="cheat-overlay" id="cheatOverlay">
+  <div class="flame-row">
+    <span class="flame">🔥</span><span class="flame">🔥</span><span class="flame">🔥</span>
+  </div>
+  <h2>Tab switch detected!</h2>
+  <p>Leaving this tab, minimizing the window, or switching applications during the exam is not allowed and has been recorded.</p>
+  <div class="cheat-count">Violations recorded: <span id="cheatCount">0</span></div>
+  <button class="btn btn-danger" id="btnCheatOk">Return to exam</button>
+</div>
+
+<script>
+/* ================================================================
+   0. CONFIGURATION — EDIT THESE FOR YOUR DEPLOYMENT
+   ================================================================ */
+const CONFIG = {
+  // Paste the Web App URL you get after deploying the companion
+  // Google Apps Script (see google-apps-script.gs) as "Anyone" access.
+  GOOGLE_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbzGOAEcsv3VfucdDU524ANCzrkXSEH1nKzL2EVL32HG-YpnuQlSZYzBtSLYJQk-3IYG/exec",
+  EXAM_DURATION_SECONDS: 2 * 60 * 60, // 2 hours, per the instructions sheet
+  WARN_AT_SECONDS_LEFT: 10 * 60,      // timer turns amber
+  DANGER_AT_SECONDS_LEFT: 2 * 60      // timer turns red
+};
+
+/* ================================================================
+   1. QUESTION BANK
+   Each question carries its own flexible answer key so that
+   different-but-equivalent wording still scores fairly (req. #5/#11).
+   ================================================================ */
+const SECTIONS = [
+  {
+    tag: "A", title: "Reported Speech",
+    instruction: "Change each sentence from direct speech into reported speech. Make any necessary changes to the tense, pronouns, and time expressions. (10 pts)",
+    type: "reported",
+    questions: [
+      { id:1, prompt:'The HR Manager announced, "We are offering internships to JIU students next semester."', points:1,
+        model:'The HR Manager announced that they were offering internships to JIU students the following semester.',
+        keywordGroups:[['announced that'],['were offering','was offering'],['they','the company','the hr department','the department'],['following semester','next semester','the following semester','the next semester']] },
+      { id:2, prompt:'Mr. Jim stated, "My startup achieved profitability last year."', points:1,
+        model:'Mr. Jim stated that his startup had achieved profitability the previous year.',
+        keywordGroups:[['stated that'],['had achieved'],['his startup','the startup'],['previous year','year before','the year before','the previous year']] },
+      { id:3, prompt:'A Korean guest lecturer mentioned, "I have seen many successful businesses in Cikarang."', points:1,
+        model:'The Korean guest lecturer mentioned that he had seen many successful businesses in Cikarang.',
+        keywordGroups:[['mentioned that'],['had seen'],['he had','she had','he','she']] },
+      { id:4, prompt:'Ms. Clara said, "I will prepare a marketing proposal for an international client."', points:1,
+        model:'Ms. Clara said that she would prepare a marketing proposal for an international client.',
+        keywordGroups:[['said that'],['would prepare'],['she']] },
+      { id:5, prompt:'"By the end of this year, I will have completed my master\'s degree." Sarah said.', points:1,
+        model:"Sarah said that by the end of that year, she would have completed her master's degree.",
+        keywordGroups:[['said that'],['would have completed'],['that year','the year'],["master"]] },
+      { id:6, prompt:'Maria: "I work as a graphic designer for an international company."', points:1,
+        model:'Maria said that she worked as a graphic designer for an international company.',
+        keywordGroups:[['said that','told'],['worked'],['she']] },
+      { id:7, prompt:'Bethy: "Are the boys reading the book?" → Bethy asked me ___', points:1,
+        model:'Bethy asked me if the boys were reading the book.',
+        keywordGroups:[['if','whether'],['were reading']] },
+      { id:8, prompt:'Andre: "Who gave you the laptop?" → Andre wanted to know ___', points:1,
+        model:'Andre wanted to know who had given him the laptop.',
+        keywordGroups:[['who'],['had given']] },
+      { id:9, prompt:'Tom: "Is Samuel leaving on Friday?" → Tom asked me ___', points:1,
+        model:'Tom asked me if Samuel was leaving on Friday.',
+        keywordGroups:[['if','whether'],['was leaving']] },
+      { id:10, prompt:'Yosua: "Where do you play football today?" → Yosua wanted to know ___', points:1,
+        model:'Yosua wanted to know where I played football that day.',
+        keywordGroups:[['where'],['played'],['that day']] }
+    ]
+  },
+  {
+    tag: "B", title: "Determiners & Articles",
+    instruction: "Complete each sentence with the correct determiner or article. (10 pts)",
+    type: "fill",
+    questions: [
+      { id:11, prompt:'My brother wants to become _____ architect in the future.', points:1, accepted:['an'] },
+      { id:12, prompt:'We stayed at _____ hotel near the airport before our morning flight.', points:1, accepted:['a'] },
+      { id:13, prompt:'Have you seen _____ email that I sent you yesterday?', points:1, accepted:['the'] },
+      { id:14, prompt:'_____ notebook on my desk belongs to me. (The notebook is near the speaker.)', points:1, accepted:['this'] },
+      { id:15, prompt:'Can you see _____ birds flying over the lake?', points:1, accepted:['any','some','the'] },
+      { id:16, prompt:'_____ cookies are delicious. Would you like to try one?', points:1, accepted:['these','the'] },
+      { id:17, prompt:'_____ was my favorite class when I was in high school. (Referring to a class in the past.)', points:1, accepted:['that'] },
+      { id:18, prompt:'_____ student must wear an ID card during the examination.', points:1, accepted:['every','each'] },
+      { id:19, prompt:'The teacher spoke to _____ of the two students individually.', points:1, accepted:['each'] },
+      { id:20, prompt:'_____ Earth revolves around the Sun.', points:1, accepted:['the'] }
+    ]
+  },
+  {
+    tag: "C", title: "Phrasal Verbs",
+    instruction: "Complete each sentence with the correct phrasal verb. Use the base verb in parentheses. (10 pts)",
+    type: "fill",
+    questions: [
+      { id:21, prompt:'I need to _____ my little brother while my parents are at work. (look)', points:1, accepted:['look after'] },
+      { id:22, prompt:'Please _____ the lights before you leave the classroom. (turn)', points:1, accepted:['turn off'] },
+      { id:23, prompt:'She _____ an interesting idea during the meeting yesterday. (come)', points:1, accepted:['came up with'] },
+      { id:24, prompt:'We had to _____ the meeting because the manager was sick. (put)', points:1, accepted:['put off'] },
+      { id:25, prompt:'Can you _____ this word in the dictionary? (look)', points:1, accepted:['look up'] },
+      { id:26, prompt:'They _____ their trip because of the heavy rain. (call)', points:1, accepted:['called off'] },
+      { id:27, prompt:'He _____ smoking last year and feels much healthier now. (give)', points:1, accepted:['gave up'] },
+      { id:28, prompt:'The teacher asked us to _____ our homework before Friday. (hand)', points:1, accepted:['hand in'] },
+      { id:29, prompt:'We _____ of milk this morning, so we couldn\'t make breakfast. (run)', points:1, accepted:['ran out'] },
+      { id:30, prompt:'Don\'t _____! Keep trying, and you will succeed. (give)', points:1, accepted:['give up'] }
+    ]
+  },
+  {
+    tag: "D", title: "Gerund or To-Infinitive",
+    instruction: "Complete each sentence with the correct form of the verb in parentheses. Use either the -ing form or the to-infinitive. (10 pts)",
+    type: "fill",
+    questions: [
+      { id:31, prompt:'I enjoy _____ English novels in my free time. (read)', points:1, accepted:['reading'] },
+      { id:32, prompt:'She decided _____ abroad after graduation. (study)', points:1, accepted:['to study'] },
+      { id:33, prompt:'They finished _____ the classroom before lunch. (clean)', points:1, accepted:['cleaning'] },
+      { id:34, prompt:'We hope _____ you again next semester. (see)', points:1, accepted:['to see'] },
+      { id:35, prompt:'My brother avoids _____ spicy food. (eat)', points:1, accepted:['eating'] },
+      { id:36, prompt:'The teacher reminded us _____ our assignments on time. (submit)', points:1, accepted:['to submit'] },
+      { id:37, prompt:'He admitted _____ the window by accident. (break)', points:1, accepted:['breaking'] },
+      { id:38, prompt:'I want _____ a new language this year. (learn)', points:1, accepted:['to learn'] },
+      { id:39, prompt:'She promised _____ me after the meeting. (call)', points:1, accepted:['to call'] },
+      { id:40, prompt:'The children practiced _____ the song before the performance. (sing)', points:1, accepted:['singing'] }
+    ]
+  },
+  {
+    tag: "E", title: "Reflection",
+    instruction: "Reflect on what you have learned, then answer the following questions in your own words.",
+    type: "reflection",
+    questions: [
+      { id:41, prompt:'What was the most significant concept you learned from the first term?', points:4, minWords:15 },
+      { id:42, prompt:'What aspect of grammar do you understand better now than before? Explain it.', points:3, minWords:10 },
+      { id:43, prompt:'What question regarding the topics do you still have? List at least 3 questions.', points:3, minWords:10 }
+    ]
+  }
+];
+
+const ALL_QUESTIONS = SECTIONS.flatMap(s => s.questions.map(q => ({...q, type:s.type, sectionTag:s.tag, sectionTitle:s.title})));
+const TOTAL_QUESTIONS = ALL_QUESTIONS.length;
+const MAX_SCORE = ALL_QUESTIONS.reduce((sum,q)=>sum+q.points,0);
+
+/* ================================================================
+   2. STATE
+   ================================================================ */
+const state = {
+  name: '', studentId: '',
+  answers: {},          // id -> raw string
+  timeLeft: CONFIG.EXAM_DURATION_SECONDS,
+  timerHandle: null,
+  startedAt: null,
+  tabSwitchCount: 0,
+  submitted: false
+};
+
+/* ================================================================
+   3. SCORING ENGINE (flexible / tolerant matching)
+   ================================================================ */
+function normalize(str){
+  return (str||'').toLowerCase().trim().replace(/[.,!?;:'"()]/g,'').replace(/\s+/g,' ');
+}
+function levenshtein(a,b){
+  const m=a.length, n=b.length;
+  if(m===0) return n; if(n===0) return m;
+  const dp = Array.from({length:m+1},()=>new Array(n+1).fill(0));
+  for(let i=0;i<=m;i++) dp[i][0]=i;
+  for(let j=0;j<=n;j++) dp[0][j]=j;
+  for(let i=1;i<=m;i++){
+    for(let j=1;j<=n;j++){
+      const cost = a[i-1]===b[j-1] ? 0 : 1;
+      dp[i][j] = Math.min(dp[i-1][j]+1, dp[i][j-1]+1, dp[i-1][j-1]+cost);
+    }
+  }
+  return dp[m][n];
+}
+function similarity(a,b){
+  a=normalize(a); b=normalize(b);
+  if(!a && !b) return 1;
+  if(!a || !b) return 0;
+  const dist = levenshtein(a,b);
+  return 1 - dist / Math.max(a.length, b.length);
+}
+
+// Section B/C/D: short fixed-answer fill blanks — exact or near-exact match, typo tolerant
+function scoreFill(raw, accepted, points){
+  const ans = normalize(raw);
+  if(!ans) return 0;
+  let best = 0;
+  accepted.forEach(a=>{
+    const s = similarity(ans, a);
+    if(s>best) best = s;
+    // also allow the accepted word to be *contained* in a slightly longer answer
+    if(ans.includes(normalize(a)) || normalize(a).includes(ans)) best = Math.max(best, 0.95);
+  });
+  if(best >= 0.84) return points;
+  return 0;
+}
+
+// Section A (reported speech) & E (reflection): flexible, meaning-based, partial credit
+function scoreReported(raw, q){
+  const ans = raw || '';
+  if(normalize(ans).length < 3) return 0;
+  const lower = ans.toLowerCase();
+  const totalGroups = q.keywordGroups.length;
+  let matched = 0;
+  q.keywordGroups.forEach(group=>{
+    if(group.some(alt=>lower.includes(alt.toLowerCase()))) matched++;
+  });
+  const keywordScore = totalGroups ? matched/totalGroups : 0;
+  const simScore = similarity(ans, q.model);
+  const combined = 0.55*keywordScore + 0.45*simScore;
+  if(combined >= 0.68) return q.points;
+  if(combined >= 0.42) return q.points*0.5;
+  if(combined >= 0.18) return q.points*0.25;
+  return 0;
+}
+
+function scoreReflection(raw, q){
+  const ans = normalize(raw);
+  if(!ans) return 0;
+  const wordCount = ans.split(' ').filter(Boolean).length;
+  const ratio = Math.min(1, wordCount / q.minWords);
+  if(ratio >= 1) return q.points;
+  if(ratio >= 0.6) return Math.round(q.points*0.7*4)/4;
+  if(ratio >= 0.3) return Math.round(q.points*0.4*4)/4;
+  return q.points*0.15 > 0 ? Math.round(q.points*0.15*4)/4 : 0;
+}
+
+function scoreQuestion(q, raw){
+  if(q.type==='fill') return scoreFill(raw, q.accepted, q.points);
+  if(q.type==='reported') return scoreReported(raw, q);
+  if(q.type==='reflection') return scoreReflection(raw, q);
+  return 0;
+}
+
+function correctAnswerDisplay(q){
+  if(q.type==='fill') return q.accepted.join(' / ');
+  if(q.type==='reported') return q.model;
+  if(q.type==='reflection') return 'Open-ended — graded on depth & completeness of your own reflection.';
+  return '';
+}
+
+/* ================================================================
+   4. RENDERING — QUESTIONS
+   ================================================================ */
+const questionsRoot = document.getElementById('questionsRoot');
+
+function buildQuestions(){
+  let html = '';
+  SECTIONS.forEach(sec=>{
+    html += `<div class="section-head"><span class="tag">SECTION ${sec.tag}</span><h2>${sec.title}</h2></div>`;
+    html += `<div class="section-instruction">${sec.instruction}</div>`;
+    sec.questions.forEach(q=>{
+      const isLong = sec.type==='reflection';
+      const inputEl = isLong
+        ? `<textarea data-qid="${q.id}" placeholder="Write your answer here…"></textarea>`
+        : (sec.type==='reported'
+            ? `<textarea data-qid="${q.id}" placeholder="Write the reported speech sentence…" style="min-height:44px;"></textarea>`
+            : `<input type="text" data-qid="${q.id}" placeholder="Type your answer…">`);
+      html += `
+        <div class="q-card" id="qcard-${q.id}">
+          <div class="q-head">
+            <div class="q-num">${q.id}</div>
+            <div class="q-prompt">${q.prompt}</div>
+            <div class="q-pts">${q.points} pt${q.points!==1?'s':''}</div>
+          </div>
+          ${inputEl}
+        </div>`;
+    });
+  });
+  questionsRoot.innerHTML = html;
+
+  questionsRoot.querySelectorAll('[data-qid]').forEach(el=>{
+    el.addEventListener('input', onAnswerInput);
+  });
+}
+
+function onAnswerInput(e){
+  const id = e.target.getAttribute('data-qid');
+  state.answers[id] = e.target.value;
+  const card = document.getElementById('qcard-'+id);
+  if(e.target.value.trim().length>0) card.classList.add('answered');
+  else card.classList.remove('answered');
+  updateProgress();
+}
+
+function updateProgress(){
+  const answeredCount = ALL_QUESTIONS.filter(q => (state.answers[q.id]||'').trim().length>0).length;
+  const pct = Math.round((answeredCount/TOTAL_QUESTIONS)*100);
+  document.getElementById('progressBar').style.width = pct+'%';
+  document.getElementById('progressLabel').textContent = `${answeredCount} / ${TOTAL_QUESTIONS}`;
+}
+
+/* ================================================================
+   5. TIMER
+   ================================================================ */
+function formatTime(sec){
+  const h = Math.floor(sec/3600).toString().padStart(2,'0');
+  const m = Math.floor((sec%3600)/60).toString().padStart(2,'0');
+  const s = Math.floor(sec%60).toString().padStart(2,'0');
+  return `${h}:${m}:${s}`;
+}
+function startTimer(){
+  const el = document.getElementById('timerDisplay');
+  state.timerHandle = setInterval(()=>{
+    state.timeLeft--;
+    if(state.timeLeft<=0){
+      state.timeLeft=0;
+      el.textContent = formatTime(0);
+      clearInterval(state.timerHandle);
+      finalizeSubmission(true); // auto-submit, skip confirmation
+      return;
+    }
+    el.textContent = formatTime(state.timeLeft);
+    el.classList.toggle('warn', state.timeLeft<=CONFIG.WARN_AT_SECONDS_LEFT && state.timeLeft>CONFIG.DANGER_AT_SECONDS_LEFT);
+    el.classList.toggle('danger', state.timeLeft<=CONFIG.DANGER_AT_SECONDS_LEFT);
+  },1000);
+}
+
+/* ================================================================
+   6. ANTI-CHEATING
+   ================================================================ */
+const cheatOverlay = document.getElementById('cheatOverlay');
+const cheatCountEl = document.getElementById('cheatCount');
+
+function triggerCheatWarning(){
+  if(state.submitted) return;
+  if(document.getElementById('screen-exam').classList.contains('active') === false) return;
+  state.tabSwitchCount++;
+  cheatCountEl.textContent = state.tabSwitchCount;
+  cheatOverlay.classList.add('show');
+}
+document.addEventListener('visibilitychange', ()=>{ if(document.hidden) triggerCheatWarning(); });
+window.addEventListener('blur', triggerCheatWarning);
+document.getElementById('btnCheatOk').addEventListener('click', ()=>{
+  cheatOverlay.classList.remove('show');
+  window.focus();
+});
+// discourage right-click / devtools copying during the exam (best-effort only)
+document.addEventListener('contextmenu', e=>{
+  if(document.getElementById('screen-exam').classList.contains('active')) e.preventDefault();
+});
+
+/* ================================================================
+   7. SCREEN NAVIGATION
+   ================================================================ */
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+document.getElementById('btnStart').addEventListener('click', ()=>{
+  const name = document.getElementById('studentName').value.trim();
+  const id = document.getElementById('studentId').value.trim();
+  if(!name || !id){
+    document.getElementById('startErrorField').style.display='block';
+    return;
+  }
+  state.name = name; state.studentId = id; state.startedAt = Date.now();
+  document.getElementById('barName').textContent = name;
+  document.getElementById('barId').textContent = id;
+  buildQuestions();
+  updateProgress();
+  showScreen('screen-exam');
+  startTimer();
+});
+
+/* ================================================================
+   8. SUBMISSION FLOW
+   ================================================================ */
+const modalMissing = document.getElementById('modalMissing');
+const modalConfirm = document.getElementById('modalConfirm');
+
+document.getElementById('btnSubmit').addEventListener('click', ()=>{
+  const missing = ALL_QUESTIONS.filter(q => (state.answers[q.id]||'').trim().length===0);
+  if(missing.length>0){
+    document.getElementById('missingList').innerHTML = missing.map(q=>`<span>Q${q.id}</span>`).join('');
+    modalMissing.classList.add('show');
+    return;
+  }
+  modalConfirm.classList.add('show');
+});
+document.getElementById('btnMissingOk').addEventListener('click', ()=>{
+  modalMissing.classList.remove('show');
+  const firstMissing = ALL_QUESTIONS.find(q => (state.answers[q.id]||'').trim().length===0);
+  if(firstMissing){
+    const card = document.getElementById('qcard-'+firstMissing.id);
+    card.classList.add('flagged');
+    card.scrollIntoView({behavior:'smooth', block:'center'});
+    setTimeout(()=>card.classList.remove('flagged'), 2200);
+  }
+});
+document.getElementById('btnConfirmNo').addEventListener('click', ()=>{
+  modalConfirm.classList.remove('show');
+});
+document.getElementById('btnConfirmYes').addEventListener('click', ()=>{
+  modalConfirm.classList.remove('show');
+  finalizeSubmission(false);
+});
+
+function finalizeSubmission(auto){
+  if(state.submitted) return;
+  state.submitted = true;
+  clearInterval(state.timerHandle);
+
+  const results = ALL_QUESTIONS.map(q=>{
+    const raw = state.answers[q.id] || '';
+    const points = scoreQuestion(q, raw);
+    return { id:q.id, sectionTag:q.sectionTag, prompt:q.prompt, answer:raw, points, maxPoints:q.points, correct:correctAnswerDisplay(q) };
+  });
+  const totalScore = Math.round(results.reduce((s,r)=>s+r.points,0)*100)/100;
+  const percentage = Math.round((totalScore/MAX_SCORE)*1000)/10;
+  const timeTaken = Math.round((Date.now()-state.startedAt)/1000);
+
+  renderResults(results, totalScore, percentage, auto);
+  showScreen('screen-results');
+  sendToGoogleSheets({
+    name: state.name, studentId: state.studentId,
+    answers: results, totalScore, maxScore: MAX_SCORE, percentage,
+    tabSwitchCount: state.tabSwitchCount, timeTaken
+  });
+}
+
+/* ================================================================
+   9. RESULTS RENDERING
+   ================================================================ */
+function renderResults(results, totalScore, percentage, auto){
+  document.getElementById('scoreCandidate').textContent = `${state.name} · ID ${state.studentId}${auto? ' · Auto-submitted (time expired)':''}`;
+  document.getElementById('scoreRaw').textContent = `${totalScore} / ${MAX_SCORE} points`;
+  document.getElementById('scorePct').textContent = `${percentage}%`;
+
+  const circumference = 439.8;
+  const offset = circumference - (percentage/100)*circumference;
+  const ring = document.getElementById('ringFg');
+  requestAnimationFrame(()=>{ ring.style.strokeDashoffset = offset; });
+
+  let html = '';
+  results.forEach(r=>{
+    const badge = r.points>=r.maxPoints ? 'full' : (r.points>0 ? 'partial' : 'zero');
+    const badgeLabel = badge==='full' ? `Full · ${r.points}/${r.maxPoints}` : badge==='partial' ? `Partial · ${r.points}/${r.maxPoints}` : `0/${r.maxPoints}`;
+    html += `
+      <div class="result-q">
+        <div class="rq-top">
+          <span class="rq-badge ${badge}">${badgeLabel}</span>
+          <span class="rq-label">Question ${r.id} · Section ${r.sectionTag}</span>
+        </div>
+        <div class="rq-label">Prompt</div>
+        <div class="rq-text">${escapeHtml(r.prompt)}</div>
+        <div class="rq-label">Your answer</div>
+        <div class="rq-text ${r.answer.trim()?'':'empty'}">${r.answer.trim() ? escapeHtml(r.answer) : 'No answer submitted'}</div>
+        <div class="rq-label">Correction / model answer</div>
+        <div class="rq-correct">${escapeHtml(r.correct)}</div>
+      </div>`;
+  });
+  document.getElementById('resultsRoot').innerHTML = html;
+}
+function escapeHtml(str){
+  return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ================================================================
+   10. GOOGLE SHEETS INTEGRATION
+   ================================================================ */
+async function sendToGoogleSheets(payload){
+  const statusEl = document.getElementById('gsStatus');
+  if(!CONFIG.GOOGLE_SCRIPT_URL || CONFIG.GOOGLE_SCRIPT_URL.indexOf('PASTE_YOUR')===0){
+    statusEl.textContent = 'Google Sheets URL not configured — results shown below only.';
+    statusEl.className = 'gs-status fail';
+    return;
+  }
+  try{
+    const res = await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
+      method:'POST',
+      headers:{ 'Content-Type':'text/plain;charset=utf-8' }, // avoids CORS preflight on Apps Script
+      body: JSON.stringify(payload)
+    });
+    statusEl.textContent = 'Results saved to the answer sheet successfully.';
+    statusEl.className = 'gs-status ok';
+  }catch(err){
+    statusEl.textContent = 'Could not reach the answer sheet (offline or misconfigured). Your score is still shown below.';
+    statusEl.className = 'gs-status fail';
+  }
+}
+
+/* ================================================================
+   11. AMBIENT BACKGROUND DOTS
+   ================================================================ */
+(function seedDrift(){
+  const box = document.getElementById('bgDrift');
+  let s='';
+  for(let i=0;i<26;i++){
+    const top = Math.random()*100, left = Math.random()*100, delay = Math.random()*10, dur = 14+Math.random()*10;
+    s += `<span style="top:${top}%; left:${left}%; animation-delay:${delay}s; animation-duration:${dur}s;"></span>`;
+  }
+  box.innerHTML = s;
+})();
+
+/* Warn on manual reload/close during active exam */
+window.addEventListener('beforeunload', (e)=>{
+  if(document.getElementById('screen-exam').classList.contains('active') && !state.submitted){
+    e.preventDefault(); e.returnValue='';
+  }
+});
+</script>
+</body>
+</html>
